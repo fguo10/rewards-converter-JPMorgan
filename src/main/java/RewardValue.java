@@ -12,22 +12,34 @@ public class RewardValue {
     private static final double milesToCashRate = 0.0035;
 
     public RewardValue(double cashVal) {
+        if(cashVal < 0) {
+            throw new IllegalArgumentException("cashVal must be non-negative");
+        }
         this.cashVal = cashVal;
-        this.milesVal = (int) (cashVal / milesToCashRate);
     }
 
 
     public RewardValue(int milesVal) {
-        this.milesVal = milesVal;
+        if(milesVal < 0){
+            throw new IllegalArgumentException("milesVal must be non-negative");
+        }
         this.cashVal = milesVal * milesToCashRate;
     }
 
+
+    private static int convertToMiles(double cashValue) {
+        return (int) (cashValue / milesToCashRate);
+    }
+
+    private static double convertToCash(int milesValue) {
+        return milesValue * milesToCashRate;
+    }
 
     public double getCashValue() {
         return cashVal;
     }
 
     public double getMilesValue() {
-        return milesVal;
+        return convertToMiles(cashVal);
     }
 }
